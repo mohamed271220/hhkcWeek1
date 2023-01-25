@@ -1,0 +1,13 @@
+echo "# hhkcWeek1" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/mohamed271220/hhkcWeek1.git
+git push -u origin main
+
+
+along the way
+git add .
+git commit -m "name of the process"
+git push -u origin main
