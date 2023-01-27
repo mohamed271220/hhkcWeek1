@@ -31,7 +31,7 @@ function RenderMenuItem({ dish, onClick }) {
                     {menu}
                 </div>
             </div>
-        );    
+        );
     }
 
 

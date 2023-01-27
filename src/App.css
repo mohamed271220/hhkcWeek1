@@ -1,3 +1,85 @@
-body{
-    background-color: rgb(160, 241, 255);
+body {
+    background-color: rgb(201, 235, 240);
+    margin:0;
+    font-family: 'prompt',sans-serif;
 }
+.custom-shape-divider-bottom-1674808735 {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+    transform: rotate(180deg);
+    z-index: -1;
+}
+
+.custom-shape-divider-bottom-1674808735 svg {
+    position: relative;
+    display: block;
+    width: calc(145% + 1.3px);
+    height: 149px;
+}
+
+.custom-shape-divider-bottom-1674808735 .shape-fill {
+    fill: #D1C4E9;
+}
+
+/** For tablet devices **/
+@media (min-width: 768px) and (max-width: 1023px) {
+    .custom-shape-divider-bottom-1674808735 svg {
+        width: calc(171% + 1.3px);
+        height: 183px;
+    }
+}
+
+/** For mobile devices **/
+@media (max-width: 767px) {
+    .custom-shape-divider-bottom-1674808735 svg {
+        width: calc(100% + 1.3px);
+        height: 98px;
+    }
+}
+.row-header{
+    margin:0px auto;
+    padding:0px auto;
+}
+
+.row-content {
+    margin:0px auto;
+    padding: 50px 0px 50px 0px;
+    border-bottom: 1px ridge;
+    min-height:400px;
+}
+
+.footer{
+    background-color: #D1C4E9;
+    margin:0px auto;
+    padding: 20px 0px 20px 0px;
+}
+.jumbotron {
+    padding:70px 30px 70px 30px;
+    margin:0px auto;
+    background: #9575CD ;
+    color:floralwhite;
+}
+
+address{
+    font-size:80%;
+    margin:0px;
+    color:#0f0f0f;
+}
+
+.navbar-dark {
+    background-color: #512DA8;
+}
+/* .spacer{
+    aspect-ratio: 16/9;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.layer {
+    background-image: url('components/layered-waves-haikei\ \(2\).svg');
+} */
