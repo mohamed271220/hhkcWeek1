@@ -3,26 +3,70 @@ import { Navbar, NavbarBrand } from 'reactstrap';
 import Menu from './/MenuComponent';
 import DishDetail from './DishdetailComponent';
 import { DISHES } from '../shared/dishes';
+import { COMMENTS } from '../shared/comments';
+import { PROMOTIONS } from '../shared/promotions';
+import { LEADERS } from '../shared/leaders';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
+import Home from './HomeComponent';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import Contact from './ContactComponent';
 
 class Main extends Component {
+
     constructor(props) {
         super(props);
+
         this.state = {
             dishes: DISHES,
-            selectedDish: null
+            comments: COMMENTS,
+            promotions: PROMOTIONS,
+            leaders: LEADERS
         };
     }
-    onDishSelect(dishId) {
-        this.setState({ selectedDish: dishId })
-    }
+
     render() {
+        const HomePage = () => {
+            return (
+                // so here we passing the dish as parameters and using the filter function
+                // to fetch the featured dish value
+                <Home
+                    /*the .filter((dish) => dish.featured) returns an array so you want to fetch the first element in it
+                    i.e you saying go ahead and filter the element with attribute featured
+                    and but it in an array and pick first element from it  */
+                    dish={this.state.dishes.filter((dish) => dish.featured)[0]}
+                    promotion={this.state.promotions.filter((promo) => promo.featured)[0]}
+                    leader={this.state.leaders.filter((leader) => leader.featured)[0]}
+                />
+            );
+        }
+        const DishWithId = ({match}) => {
+            return (
+                // here you pass the matching dish "match para" with a certain item to return it to DishDetail
+                //dish is your argument
+                <DishDetail dish={this.state.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]}
+                // comments is another argument 
+                comments={this.state.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))}
+                />
+            );
+        }
+
         return (
             <div>
                 <Header />
-                <Menu dishes={this.state.dishes}
-                    onClick={(dishId) => this.onDishSelect(dishId)} />
+                <Switch>
+                    {/* switch between these routes  */}
+                    <Route path='/home' component={HomePage} />
+                    {/* how to pass props to the route by using a function */}
+                    <Route exact path='/menu' component={() => <Menu dishes={this.state.dishes} />} />
+                    {/* and this one is to use for rendering the high lighted menu  */}
+                    {/*also same path but we used exact in the first one*/}
+                    <Route path="/menu/:dishId" component={DishWithId}></Route>
+                    {/* like the first you just need to pass the component if it get no props */}
+                    <Route exact path='/contactus' component={Contact} ></Route>
+                    {/* if the route does not match any of these do  */}
+                    <Redirect to="/home" />
+                </Switch>
                 <div class="custom-shape-divider-bottom-1674808735">
                     <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
                         <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" class="shape-fill"></path>
@@ -30,11 +74,6 @@ class Main extends Component {
                         <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" class="shape-fill"></path>
                     </svg>
                 </div>
-
-
-
-                <DishDetail
-                    dish={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]} />
                 <Footer />
             </div>
         );
