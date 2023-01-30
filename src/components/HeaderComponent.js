@@ -56,6 +56,22 @@ class Header extends Component {
                                     <NavLink className="nav-link" to="/contactus">
                                         <span className="fa fa-address-card fa-lg"></span> contact us</NavLink>
                                 </NavItem>
+                                {/* <NavItem className='has-dropdown'>
+                                    <NavLink className="nav-link" >
+                                    <a href="#" className='align-content-center'>Theme</a>
+                                    <ul className="dropdown">
+                                        <li className="dropdown-item" >
+                                            <a id='light' href="#">Light</a>
+                                        </li>
+                                        <li className="dropdown-item" >
+                                        <a id='dark' href="#">Dark</a>
+                                        </li>
+                                        <li className="dropdown-item" >
+                                        <a id='solar' href="#">Default</a>
+                                        </li>
+                                    </ul>
+                                    </NavLink>
+                                </NavItem> */}
                             </Nav>
                         </Collapse>
 
@@ -65,7 +81,7 @@ class Header extends Component {
                     {/* info to be displayed at the nav bar */}
                     <div className="container">
                         <div className="row row-header">
-                            <div className="col-12 col-sm-6">
+                            <div className="offset-3 col-12 col-sm-6">
                                 <h1>Ristorante con fusion</h1>
                                 <p>We take inspiration from the World's best cuisines,
                                     and create a unique fusion experience. Our lipsmacking

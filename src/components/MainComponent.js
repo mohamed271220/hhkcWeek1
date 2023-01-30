@@ -11,6 +11,7 @@ import Footer from './FooterComponent';
 import Home from './HomeComponent';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Contact from './ContactComponent';
+import About from './AboutusComponent';
 
 class Main extends Component {
 
@@ -65,6 +66,8 @@ class Main extends Component {
                     {/* like the first you just need to pass the component if it get no props */}
                     <Route exact path='/contactus' component={Contact} ></Route>
                     {/* if the route does not match any of these do  */}
+                    <Route exact path='/aboutus' component={() =><About leaders={this.state.leaders} />}/>
+                    
                     <Redirect to="/home" />
                 </Switch>
                 <div class="custom-shape-divider-bottom-1674808735">

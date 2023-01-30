@@ -6,7 +6,9 @@ import { BrowserRouter } from 'react-router-dom';
 
 
 class App extends Component {
+  
   render() {
+
     return (
       <BrowserRouter>
         <div>
@@ -16,5 +18,7 @@ class App extends Component {
     );
   }
 }
+// DOM Elements
+
 
 export default App;
