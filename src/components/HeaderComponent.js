@@ -105,9 +105,9 @@ event.preventDefault();
                     {/* info to be displayed at the nav bar */}
                     <div className="container">
                         <div className="row row-header">
-                            <div className="offset-3 col-12 col-sm-6">
-                                <h1>Ristorante con fusion</h1>
-                                <p>We take inspiration from the World's best cuisines,
+                            <div className="offset-sm-3 offset-xs-2 col-12 col-sm-6">
+                                <h1 className="text-center">Ristorante con fusion</h1>
+                                <p className="text-center" >We take inspiration from the World's best cuisines,
                                     and create a unique fusion experience. Our lipsmacking
                                     creations will tickle your culinary senses!</p>
                             </div>

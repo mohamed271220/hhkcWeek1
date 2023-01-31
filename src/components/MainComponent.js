@@ -1,29 +1,31 @@
 import React, { Component } from 'react';
 import { Navbar, NavbarBrand } from 'reactstrap';
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom'
 import Menu from './/MenuComponent';
 import DishDetail from './DishdetailComponent';
-import { DISHES } from '../shared/dishes';
-import { COMMENTS } from '../shared/comments';
-import { PROMOTIONS } from '../shared/promotions';
-import { LEADERS } from '../shared/leaders';
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Home from './HomeComponent';
-import { Switch, Route, Redirect } from 'react-router-dom';
 import Contact from './ContactComponent';
 import About from './AboutusComponent';
+import { connect } from 'react-redux';
+
+
+
+const mapStateToProps = state => {
+    return {
+        dishes: state.dishes,
+        comments: state.comments,
+        promotions: state.promotions,
+        leaders: state.leaders
+    }
+}
 
 class Main extends Component {
 
     constructor(props) {
         super(props);
 
-        this.state = {
-            dishes: DISHES,
-            comments: COMMENTS,
-            promotions: PROMOTIONS,
-            leaders: LEADERS
-        };
     }
 
     render() {
@@ -35,19 +37,19 @@ class Main extends Component {
                     /*the .filter((dish) => dish.featured) returns an array so you want to fetch the first element in it
                     i.e you saying go ahead and filter the element with attribute featured
                     and but it in an array and pick first element from it  */
-                    dish={this.state.dishes.filter((dish) => dish.featured)[0]}
-                    promotion={this.state.promotions.filter((promo) => promo.featured)[0]}
-                    leader={this.state.leaders.filter((leader) => leader.featured)[0]}
+                    dish={this.props.dishes.filter((dish) => dish.featured)[0]}
+                    promotion={this.props.promotions.filter((promo) => promo.featured)[0]}
+                    leader={this.props.leaders.filter((leader) => leader.featured)[0]}
                 />
             );
         }
-        const DishWithId = ({match}) => {
+        const DishWithId = ({ match }) => {
             return (
                 // here you pass the matching dish "match para" with a certain item to return it to DishDetail
                 //dish is your argument
-                <DishDetail dish={this.state.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]}
-                // comments is another argument 
-                comments={this.state.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))}
+                <DishDetail dish={this.props.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}
+                    // comments is another argument 
+                    comments={this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10))}
                 />
             );
         }
@@ -59,15 +61,15 @@ class Main extends Component {
                     {/* switch between these routes  */}
                     <Route path='/home' component={HomePage} />
                     {/* how to pass props to the route by using a function */}
-                    <Route exact path='/menu' component={() => <Menu dishes={this.state.dishes} />} />
+                    <Route exact path='/menu' component={() => <Menu dishes={this.props.dishes} />} />
                     {/* and this one is to use for rendering the high lighted menu  */}
                     {/*also same path but we used exact in the first one*/}
                     <Route path="/menu/:dishId" component={DishWithId}></Route>
                     {/* like the first you just need to pass the component if it get no props */}
                     <Route exact path='/contactus' component={Contact} ></Route>
                     {/* if the route does not match any of these do  */}
-                    <Route exact path='/aboutus' component={() =><About leaders={this.state.leaders} />}/>
-                    
+                    <Route exact path='/aboutus' component={() => <About leaders={this.props.leaders} />} />
+
                     <Redirect to="/home" />
                 </Switch>
                 <div class="custom-shape-divider-bottom-1674808735">
@@ -83,4 +85,4 @@ class Main extends Component {
     }
 }
 
-export default Main;
+export default withRouter(connect(mapStateToProps)(Main));
