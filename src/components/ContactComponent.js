@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Input, Col, Label, FormFeedback } from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem,
+    Button, Row, Col, Label } from 'reactstrap';
+import { Control, LocalForm, Errors } from 'react-redux-form';
 
 //to use form we have to be able to hold our state
 //so we use class component 
@@ -9,7 +11,7 @@ class Contact extends Component {
     //constructor
     constructor(props) {
         super(props);
-        //now we will int our form input
+        // now we will int our form Control.text
         this.state = {
             firstName: '',
             lastName: '',
@@ -27,30 +29,30 @@ class Contact extends Component {
         }
         // these are required for the fuv to work
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
+        // this.handleControl.textChange = this.handleControl.textChange.bind(this);
         this.handleBlur = this.handleBlur.bind(this);
 
     }
-    // handlers for the form
-    handleInputChange(event) {
-        // upon any change to the input 
-        const target = event.target;
-        // retrive the value and name atribute 
-        const value = target.type === 'checkbox' ? target.checked : target.value;
-        const name = target.name;
+    // // handlers for the form
+    // handleControl.textChange(event) {
+    //     // upon any change to the Control.text 
+    //     const target = event.target;
+    //     // retrive the value and name atribute 
+    //     const value = target.type === 'checkbox' ? target.checked : target.value;
+    //     const name = target.name;
+    //     this.setState({
+    //         [name]: value,
+    //     });
+    // }
 
-        this.setState({
-            [name]: value,
-        });
-    }
 
-    handleSubmit(event) {
-        console.log("Current state is:" + JSON.stringify(this.state));
-        alert("Current state is:" + JSON.stringify(this.state));
-        event.preventDefault();
+    handleSubmit(values) {
+        console.log('Current State is: ' + JSON.stringify(values));
+        alert('Current State is: ' + JSON.stringify(values));
+        // event.preventDefault();
     }
-    //method for form validation
-    //which input was used
+    // method for form validation
+    // which Control.text was used
     handleBlur = (field) => (evt) => {
         this.setState({
             touched: { ...this.state.touched, [field]: true }
@@ -86,11 +88,11 @@ class Contact extends Component {
     }
 
     render() {
-        const errors = this.validate(
-            this.state.firstName,
-            this.state.lastName,
-            this.state.telnum,
-            this.state.email);
+        // const errors = this.validate(
+        //     this.state.firstName,
+        //     this.state.lastName,
+        //     this.state.telnum,
+        //     this.state.email);
         return (
             <div className="container">
                 <div className="row">
@@ -135,120 +137,115 @@ class Contact extends Component {
                         <h3>Send us your Feedback!</h3>
                         <div className='col-12 col-md-9'>
                             {/* on pressing submit go ahead and do that function */}
-                            <Form onSubmit={this.handleSubmit}>
+                            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
                                 {/* intialize one row of the form
                                 and to use bs to layout the elements */}
-                                <FormGroup row>
+                                <Row className="form-group">
                                     {/*md={2} at md go ahead and take 2 col  */}
                                     <Label htmlfor="firstName" md={2} > First Name</Label>
                                     {/* div class="col-md-10"====  Col md={10}*/}
                                     <Col md={10}>
-                                        <Input type="text" id="firstName" name="firstName"
-                                            placeholder="First name"
-                                            // tie the value to state
-                                            value={this.state.firstName}
-                                            valid={errors.firstname===''}
-                                            invalid={errors.firstname!==''}
-                                            onBlur={this.handleBlur('firstName')}
-                                            onChange={this.handleInputChange}>
-                                        </Input>
-                                        <FormFeedback>{errors.firstname}</FormFeedback>
+                                        <Control.text model=".firstname" id="firstName" name="firstName"
+                                            placeholder="First name" className="form-control"
+                                        // tie the value to state
+                                        // value={this.state.firstName}
+                                        // valid={errors.firstname===''}
+                                        // invalid={errors.firstname!==''}
+                                        // onBlur={this.handleBlur('firstName')}
+                                        // onChange={this.handleControl.textChange}
+                                        
+                                        />
+                                        {/* <FormFeedback>{errors.firstname}</FormFeedback> */}
 
                                     </Col>
-                                </FormGroup>
-                                <FormGroup row>
+                                </Row>
+                                <Row className="form-group">
                                     {/*md={2} at md go ahead and take 2 col  */}
                                     <Label htmlfor="lastName" md={2} > Last Name</Label>
                                     {/* div class="col-md-10"====  Col md={10}*/}
                                     <Col md={10}>
-                                        <Input type="text" id="lastName" name="lastName"
-                                            placeholder="Last name"
-                                            // tie the value to state
-                                            value={this.state.lastName}
-                                            valid={errors.lastname===''}
-                                            invalid={errors.lastname!==''}
-                                            onBlur={this.handleBlur('lastName')}
-                                            onChange={this.handleInputChange}>
-                                        </Input>
-                                        <FormFeedback>{errors.lastname}</FormFeedback>
+                                        <Control.text model=".lastname" id="lastName" name="lastName"
+                                            placeholder="Last name" className="form-control"
+                                        // tie the value to state
+                                        // value={this.state.lastName}
+                                        // valid={errors.lastname===''}
+                                        // invalid={errors.lastname!==''}
+                                        // onBlur={this.handleBlur('lastName')}
+                                        // onChange={this.handleControl.textChange}
+                                        />
+                                    
+                                        {/* <FormFeedback>{errors.lastname}</FormFeedback> */}
                                     </Col>
-                                </FormGroup>
-                                <FormGroup row>
+                                </Row>
+                                <Row className="form-group">
                                     {/*md={2} at md go ahead and take 2 col  */}
                                     <Label htmlfor="telnum" md={2} > Contact tel.</Label>
                                     {/* div class="col-md-10"====  Col md={10}*/}
                                     <Col md={10}>
-                                        <Input type="text" id="telnum" name="telnum"
-                                            placeholder="Tel num"
-                                            // tie the value to state
-                                            value={this.state.telnum}
-                                            valid={errors.telnum===''}
-                                            invalid={errors.telnum!==''}
-                                            onBlur={this.handleBlur('telnum')}
-                                            onChange={this.handleInputChange}>
-                                        </Input>
-                                        <FormFeedback>{errors.telnum}</FormFeedback>
+                                        <Control.text model=".telnum" id="telnum" name="telnum"
+                                            placeholder="Tel num" className="form-control"
+                                        // tie the value to state
+                                        // value={this.state.telnum}
+                                        // valid={errors.telnum===''}
+                                        // invalid={errors.telnum!==''}
+                                        // onBlur={this.handleBlur('telnum')}
+                                        // onChange={this.handleControl.textChange}
+                                        />
+                                        {/* <FormFeedback>{errors.telnum}</FormFeedback> */}
                                     </Col>
-                                </FormGroup>
-                                <FormGroup row>
+                                </Row>
+                                <Row className="form-group">
                                     {/*md={2} at md go ahead and take 2 col  */}
                                     <Label htmlfor="email" md={2} > Email</Label>
                                     {/* div class="col-md-10"====  Col md={10}*/}
                                     <Col md={10}>
-                                        <Input type="text" id="email" name="email"
-                                            placeholder="example@yahoo.com"
-                                            // tie the value to state
-                                            value={this.state.email}
-                                            valid={errors.email===''}
-                                            invalid={errors.email!==''}
-                                            onBlur={this.handleBlur('email')}
-                                            onChange={this.handleInputChange}>
-                                        </Input>
-                                        <FormFeedback>{errors.email}</FormFeedback>
+                                        <Control.text model=".email" id="email" name="email"
+                                            placeholder="example@yahoo.com" className="form-control"
+                                        // tie the value to state
+                                        // value={this.state.email}
+                                        // valid={errors.email===''}
+                                        // invalid={errors.email!==''}
+                                        // onBlur={this.handleBlur('email')}
+                                        // onChange={this.handleControl.textChange}
+                                        />
+                                        {/* <FormFeedback>{errors.email}</FormFeedback> */}
                                     </Col>
-                                </FormGroup>
-                                <FormGroup row>
-                                    {/* here we pushing the check box to the right without label */}
+                                </Row>
+                                <Row className="form-group">
                                     <Col md={{ size: 6, offset: 2 }}>
-                                        <FormGroup check>
+                                        <div className="form-check">
                                             <Label check>
-                                                <Input type="checkbox" name='agree'
-                                                    checked={this.state.agree}
-                                                    onChange={this.handleInputChange} />{' '}
-                                                <strong>May contact you</strong>
+                                                <Control.checkbox model=".agree" name="agree"
+                                                    className="form-check-input"
+                                                /> 
+                                                <strong>May we contact you?</strong>
                                             </Label>
-                                        </FormGroup>
+                                        </div>
                                     </Col>
                                     <Col md={{ size: 3, offset: 1 }}>
-                                        <Input type="select" name='contactType'
-                                            value={this.state.Contact}
-                                            onChange={this.handleInputChange}>
+                                        <Control.select model=".contactType" name="contactType"
+                                            className="form-control">
                                             <option>Tel.</option>
                                             <option>Email</option>
-                                        </Input>
+                                        </Control.select>
                                     </Col>
-                                </FormGroup>
-                                <FormGroup row>
-                                    {/*md={2} at md go ahead and take 2 col  */}
-                                    <Label htmlfor="message" md={2} > your feedback</Label>
-                                    {/* div class="col-md-10"====  Col md={10}*/}
+                                </Row>
+                                <Row className="form-group">
+                                    <Label htmlFor="message" md={2}>Your Feedback</Label>
                                     <Col md={10}>
-                                        <Input type="textarea" id="message" name="message"
+                                        <Control.textarea model=".message" id="message" name="message"
                                             rows="12"
-                                            // tie the value to state
-                                            value={this.state.message}
-                                            onChange={this.handleInputChange}>
-                                        </Input>
+                                            className="form-control" />
                                     </Col>
-                                </FormGroup>
-                                <FormGroup row>
+                                </Row>
+                                <Row className="form-group">
                                     <Col md={{ size: 10, offset: 2 }}>
                                         <Button type="submit" color="primary">
-                                            Send feedback
+                                            Send Feedback
                                         </Button>
                                     </Col>
-                                </FormGroup>
-                            </Form>
+                                </Row>
+                            </LocalForm>
                         </div>
                     </div>
                 </div>
