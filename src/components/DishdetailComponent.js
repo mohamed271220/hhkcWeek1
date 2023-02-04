@@ -1,7 +1,7 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
 import {
     Breadcrumb, Button, BreadcrumbItem, Card, CardImg, CardImgOverlay, CardBody, CardTitle, CardText
-    ,Select, Row, Col, Label, Modal, ModalBody, ModalHeader, Collapse, NavItem, Jumbotron, Input
+    , Select, Row, Col, Label, Modal, ModalBody, ModalHeader, Collapse, NavItem, Jumbotron, Input
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 
@@ -23,9 +23,11 @@ class CommentFrom extends Component {
     }
 
     handleSubmit(values) {
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
-        // event.preventDefault();
+        // console.log('Current State is: ' + JSON.stringify(values));
+        // alert('Current State is: ' + JSON.stringify(values));
+        // // event.preventDefault();
+        this.toggleModal();
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
     }
     toggleModal() {
         this.setState({
@@ -124,14 +126,14 @@ function RenderDishDetails({ dish }) {
     }
 }
 
-function RenderComment({ comments }) {
+function RenderComment({ comments, addComment, dishId }) {
     const itemcomment = comments.map((comment) => {
         if (comment != null) {
             return (
                 <div key={comment.id} className=''>
                     <br></br>
                     <li> {comment.comment}</li>
-                    <div>-- {comment.author}, <span>{new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' }).format(new Date(Date.parse(comment.date)))}</span></div>
+                    <div>-- {comment.author}, <span>{new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' }).format(new Date(Date.parse(comment.date)))}</span></div>
                 </div>
             )
         }
@@ -145,7 +147,9 @@ function RenderComment({ comments }) {
         <div className='col-md-5 m-1'>
             <h2>Comments:</h2>
             {itemcomment}
-            <CommentFrom />
+            <CommentFrom dishId={dishId}
+                addComment={addComment}
+            />
         </div>
     )
 }
@@ -165,7 +169,11 @@ const DishDetail = (props) => {
             </div>
             <div className='row offset-md-1'>
                 <RenderDishDetails dish={props.dish} />
-                <RenderComment comments={props.comments} />
+                <RenderComment comments={props.comments}
+                    addComment={props.addComment}
+                    dishId={props.dish.id}
+                />
+
             </div>
         </div>
 
