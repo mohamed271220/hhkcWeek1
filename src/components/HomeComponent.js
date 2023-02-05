@@ -4,22 +4,36 @@ import {
     CardTitle, CardSubtitle
 } from 'reactstrap';
 
+import  Loading  from './LoadingComponent';
+
 
 // item is the only prop to be used
-function RenderCard({ item }) {
+function RenderCard({ item,isLoading,errMess }) {
 
-    return (
-        <Card>
-            <CardImg src={item.image} alt={item.name} />
-            <CardBody>
-                <CardTitle>{item.name}</CardTitle>
-                {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
-                <CardText>{item.description}</CardText>
-            </CardBody>
-        </Card>
-    );
+    if (isLoading) {
+        return (
+            <Loading />
+        );
+    }
+    else if (errMess) {
+        return (
+            <h4>{errMess}</h4>
+        );
+    }
+    else
+        return (
+            <Card>
+                <CardImg src={item.image} alt={item.name} />
+                <CardBody>
+                    <CardTitle>{item.name}</CardTitle>
+                    {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
+                    <CardText>{item.description}</CardText>
+                </CardBody>
+            </Card>
+        );
 
 }
+
 
 function Home(props) {
     return (
@@ -27,10 +41,14 @@ function Home(props) {
             <div className="row algin-items-start" >
                 <div className="col-12 col-md m-1" >
                     {/* we will define render card to reander the parameter we send  */}
-                    <RenderCard item={props.dish} />
+                    <RenderCard item={props.dish}
+                    isLoading={props.dishesLoading}
+                    errMsg={props.dishesErrMsg}
+                    />
                 </div>
                 <div className="col-12 col-md m-1">
-                    <RenderCard item={props.promotion} />
+                    <RenderCard item={props.promotion}
+                    />
                 </div>
                 <div className="col-12 col-md m-1">
                     <RenderCard item={props.leader} />

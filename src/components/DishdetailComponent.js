@@ -4,7 +4,7 @@ import {
     , Select, Row, Col, Label, Modal, ModalBody, ModalHeader, Collapse, NavItem, Jumbotron, Input
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
-
+import  Loading  from './LoadingComponent'
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
 const required = (val) => val && val.length;
@@ -154,7 +154,26 @@ function RenderComment({ comments, addComment, dishId }) {
     )
 }
 const DishDetail = (props) => {
-    console.log('Dishdetail comp.componentDidUpdate ')
+    if (props.isLoading) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <Loading />
+                </div>
+            </div>
+        );
+    }
+    else if (props.errMess) {
+        return (
+            <div className="container">
+                <div className="row">
+                    <h4>{props.errMess}</h4>
+                </div>
+            </div>
+        );
+    }
+    else if (props.dish != null)
+        console.log('Dishdetail comp.componentDidUpdate ')
     return (
         <div className='container'>
             <div className="row">
