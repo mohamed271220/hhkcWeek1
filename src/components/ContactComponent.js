@@ -4,7 +4,7 @@ import {
     Breadcrumb, BreadcrumbItem,
     Button, Row, Col, Label
 } from 'reactstrap';
-import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Control, Form, Errors,actions } from 'react-redux-form';
 
 
 //to use form we have to be able to hold our state
@@ -29,8 +29,10 @@ class Contact extends Component {
     handleSubmit(values) {
         console.log('Current State is: ' + JSON.stringify(values));
         alert('Current State is: ' + JSON.stringify(values));
+        this.props.resetFeedbackForm();
         // event.preventDefault();
     }
+    
 
 
     render() {
@@ -79,7 +81,7 @@ class Contact extends Component {
                         <h3>Send us your Feedback!</h3>
                         <div className='col-12 col-md-9'>
                             {/* on pressing submit go ahead and do that function */}
-                            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+                            <Form model={'feedback'} onSubmit={(values) => this.handleSubmit(values)}>
                                 {/* intialize one row of the form
                                 and to use bs to layout the elements */}
                                 <Row className="form-group">
@@ -206,7 +208,7 @@ class Contact extends Component {
                                         </Button>
                                     </Col>
                                 </Row>
-                            </LocalForm>
+                            </Form>
                         </div>
                     </div>
                 </div>
